@@ -20,14 +20,3 @@ protected:
     glm::vec3 color;
     GLfloat intensity;
 };
-
-// class PointLight : public Light {
-// public:
-//     PointLight(const glm::vec3 &color, GLfloat intensity, const glm::vec3 &position);
-
-//     const glm::vec3 &getPosition() const;
-//     void setPosition(const glm::vec3 &position);
-
-// private:
-//     glm::vec3 position;
-// };

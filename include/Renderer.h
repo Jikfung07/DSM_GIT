@@ -34,6 +34,4 @@ private:
 
     const GLuint shadowMapSize = 2048;
 
-
-    // Add any necessary private methods or members here
 };

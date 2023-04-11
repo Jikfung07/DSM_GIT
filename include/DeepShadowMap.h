@@ -27,11 +27,7 @@ private:
 
 class VisibilityFunction {
 public:
-    std::vector<std::pair<float, float>> zvPairs; // 表示 z 和 V 值的数组
-
-    // 构造函数和析构函数
+    std::vector<std::pair<float, float>> zvPairs;
     VisibilityFunction() {}
     ~VisibilityFunction() {}
-
-    // 添加和删除点、线性插值等基本操作
 };

@@ -7,13 +7,13 @@ GLTexture::GLTexture(const std::string& filePath) {
     glGenTextures(1, &texture_id_);
     glBindTexture(GL_TEXTURE_2D, texture_id_);
 
-    // Set texture wrapping and filtering options
+
     glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_REPEAT);
     glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_REPEAT);
     glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR_MIPMAP_LINEAR);
     glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
 
-    // Load image data
+    // Load image
     int width, height, nrChannels;
     stbi_set_flip_vertically_on_load(true);
     unsigned char* data = stbi_load(filePath.c_str(), &width, &height, &nrChannels, 0);
@@ -32,7 +32,7 @@ GLTexture::GLTexture(const std::string& filePath) {
         std::cout << "Failed to load texture: " << filePath << std::endl;
     }
 
-    // Free image data and unbind texture
+    // Free image and unbind
     stbi_image_free(data);
     glBindTexture(GL_TEXTURE_2D, 0);
 }

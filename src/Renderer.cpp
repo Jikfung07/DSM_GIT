@@ -6,8 +6,6 @@ Renderer::Renderer(GLuint width, GLuint height)
       deepShadowShader("path/to/deepShadowVertex.glsl", "path/to/deepShadowFragment.glsl"),
       sceneShader("path/to/sceneVertex.glsl", "path/to/sceneFragment.glsl") {
 
-    // Initialize OpenGL settings if needed
-
     // Create shadow map FBO and texture
     glGenFramebuffers(1, &shadowMapFBO);
     glGenTextures(1, &shadowMapTexture);
@@ -26,14 +24,12 @@ Renderer::Renderer(GLuint width, GLuint height)
     glReadBuffer(GL_NONE);
     glBindFramebuffer(GL_FRAMEBUFFER, 0);
 
-    // Create deep shadow map FBO and texture
-    // ...
+    // deep shadow map FBO and texture
+    // à faire
 }
 
 
-Renderer::~Renderer() {
-    // Clean up any resources if needed
-}
+Renderer::~Renderer() {}
 
 void Renderer::RenderScene(const Camera& camera, const std::vector<Mesh*>& meshes, const std::vector<Light*>& lights) {
     // Render shadow maps

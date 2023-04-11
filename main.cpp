@@ -13,8 +13,12 @@
 using namespace std;
 
 const GLuint WIDTH = 800, HEIGHT = 600;
+// Create a camera object
+Camera camera(glm::vec3(-2.0f, 2.0f, 8.0f));
 
 void key_callback(GLFWwindow* window, int key, int scancode, int action, int mode);
+void mouse_callback(GLFWwindow* window, double xpos, double ypos);
+void scroll_callback(GLFWwindow* window, double xoffset, double yoffset);
 
 int main() {
     // Initialize GLFW
@@ -47,6 +51,11 @@ int main() {
 
     // Set the callback function for handling key presses
     glfwSetKeyCallback(window, key_callback);
+
+    glfwSetCursorPosCallback(window, mouse_callback);
+    glfwSetScrollCallback(window, scroll_callback);
+    glfwSetInputMode(window, GLFW_CURSOR, GLFW_CURSOR_DISABLED);
+
 
     // Create vertices for a cube
     vector<Vertex> vertices = {
@@ -92,24 +101,8 @@ int main() {
         20, 21, 22, 20, 22, 23
     };
 
-    // Create texture coordinates for the cube
-    // vector<glm::vec2> texCoords = {
-    //     {0.0f, 0.0f}, {1.0f, 0.0f}, {1.0f, 1.0f}, {0.0f, 1.0f}, // Front face
-    //     {1.0f, 0.0f}, {0.0f, 0.0f}, {0.0f, 1.0f}, {1.0f, 1.0f}, // Back face
-    //     {1.0f, 0.0f}, {0.0f, 0.0f}, {0.0f, 1.0f}, {1.0f, 1.0f}, // Right face
-    //     {0.0f, 0.0f}, {1.0f, 0.0f}, {1.0f, 1.0f}, {0.0f, 1.0f}, // Left face
-    //     {0.0f, 1.0f}, {1.0f, 1.0f}, {1.0f, 0.0f}, {0.0f, 0.0f}, // Top face
-    //     {1.0f, 1.0f}, {0.0f, 1.0f}, {0.0f, 0.0f}, {1.0f, 0.0f}  // Bottom face
-    // };
-
     // Create a shader object
     Shader shader("/home/jikfung/MU4/IG3D/Project_IG3D/DSM_4/resources/vertexShader.vs", "/home/jikfung/MU4/IG3D/Project_IG3D/DSM_4/resources/fragmentShader.fs");
-
-    // Create a camera object
-    Camera camera(glm::vec3(-2.0f, 2.0f, 8.0f));
-
-    // Create a model object
-    // Model model("path/to/model");
 
     // Create a light object and set its properties
     Light light(glm::vec3(1.0f, 1.0f, 1.0f), glm::vec3(1.0f, 1.0f, 1.0f), 1.0f);
@@ -173,4 +166,28 @@ int main() {
 void key_callback(GLFWwindow* window, int key, int scancode, int action, int mode) {
     if (key == GLFW_KEY_ESCAPE && action == GLFW_PRESS)
         glfwSetWindowShouldClose(window, GL_TRUE);
+}
+
+void mouse_callback(GLFWwindow* window, double xpos, double ypos) {
+    static bool firstMouse = true;
+    static float lastX = WIDTH / 2.0f;
+    static float lastY = HEIGHT / 2.0f;
+
+    if (firstMouse) {
+        lastX = xpos;
+        lastY = ypos;
+        firstMouse = false;
+    }
+
+    float xoffset = xpos - lastX;
+    float yoffset = lastY - ypos; // Reversed since y-coordinates go from bottom to top
+
+    lastX = xpos;
+    lastY = ypos;
+
+    camera.ProcessMouseMovement(xoffset, yoffset);
+}
+
+void scroll_callback(GLFWwindow* window, double xoffset, double yoffset) {
+    camera.ProcessMouseScroll(yoffset);
 }

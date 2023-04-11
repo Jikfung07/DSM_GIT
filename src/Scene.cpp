@@ -12,8 +12,6 @@ Scene::~Scene() {
     for (auto& light : lights) {
         delete light;
     }
-
-    // Do not delete the camera, as it might be shared between multiple scenes
 }
 
 void Scene::AddMesh(Mesh* mesh) {
